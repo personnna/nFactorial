@@ -1,5 +1,10 @@
 debug = true
-const DIFFICTULTY = 250
+const DIFFICTULTY = 1000
+const EGG_SPAWN_RATE = 1000
+const LIVES = 1
+
+var audio = new Audio('assets/eggCrack.mp3');
+audio.playbackRate = 2
 
 const trail1 = ['','','','','','']
 const trail2 = ['','','','','','']
@@ -60,10 +65,10 @@ const rollEggFor = (n) => {
         console.log(error);
     }
 
-    // if index of egg is 6 then it cracks
+    // if index of egg is 5 then it cracks
     if (i_egg+1 == 6) {
         // TODO: return cracked egg
-        
+        audio.play();
         trails[n][i_egg] = ''
         // alert("cracked egg")
         if (debug) {
@@ -119,21 +124,16 @@ const collectEggFrom = (n) => {
 }
 let intervalId = 0
 const setControllerFor = (key) => {
-    document.addEventListener('keydown', (e)=>{
+    document.addEventListener('keypress', (e)=>{
+        clearInterval(intervalId)
+        intervalId = 0
         if (e.key == key) {
             collectEggFrom(key-0)
+            intervalId = setInterval(() => collectEggFrom(key-0), DIFFICTULTY/2)
+
             if (debug) {
                 console.log("Interal Id is "+intervalId+" for key "+key);
             }
-            if (intervalId == 0) {
-                intervalId = setInterval(() => collectEggFrom(key-0), 1000)
-            }
-        }
-    })
-    document.addEventListener('keyup', (e)=>{
-        if (e.key == key) {
-            clearInterval(intervalId)
-            intervalId = 0
         }
     })
     if (debug) {
@@ -148,18 +148,24 @@ function getRandomInt(max) {
 const setButtonFor = (key, class_name) => {
     document.addEventListener('keydown', (e)=>{
         if (e.key == key) {
+            for (let i = 1; i <= 4; i++) {
+                document.querySelector('.wolf'+i).classList.add("hidden")
+                
+            }
             document.querySelector('.'+class_name).classList.remove("hidden")
+
         }
     })
-    document.addEventListener('keyup', (e)=>{
-        if (e.key == key) {
-            document.querySelector('.'+class_name).classList.add("hidden")
-        }
-    })
+    // document.addEventListener('keyup', (e)=>{
+    //     if (e.key == key) {
+    //         document.querySelector('.'+class_name).classList.add("hidden")
+    //     }
+    // })
     if (debug) {
         console.log("Controller added to "+ key +" for " +class_name);
     }
 }
+
 
 
 const startGame = () => {
@@ -174,7 +180,14 @@ const startGame = () => {
     setControllerFor('2')
     setControllerFor('3')
     setControllerFor('4')    
-    setInterval(() => addEggFor(getRandomInt(4)+1), 500)
+    setInterval(() => addEggFor(getRandomInt(4)+1), EGG_SPAWN_RATE)
 }
 
+let leaderboard = {}
+let player_name = prompt("What is your name?")
 startGame()
+
+
+if (cnt){
+    localStorage.setItem(player_name, cnt)
+}

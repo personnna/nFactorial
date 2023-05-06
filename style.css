@@ -27,6 +27,37 @@ body {
   display: none;
 }
 
+.egg {
+  position: absolute;
+}
+
+.egg11 {
+  top: 95px;
+  left: 46px;
+}
+.egg12 {
+  top: 118px;
+  left: 71px;
+}
+.egg13 {
+  top: 138px;
+  left: 95px;
+}
+.egg14 {
+  top: 163px;
+  left: 121px;
+}
+
+.egg15 {
+  top: 204px;
+  left: 183px;
+}
+
+.cracked-egg-left {
+  top: 437px;
+  left: 144px;
+}
+
 .wolf1 {
 left: 150px;
 }
@@ -41,13 +72,6 @@ left: 150px;
 }
 
 .game__wolf {
-  /* background-image: url(/assets/Wolf1.png); */
   position: absolute;
   top: 130px;
-  /* left: 50%; */
-  
-  
-  /* width: fit-content; */
-  /* height: 100%; */
-  
 }

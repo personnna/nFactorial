@@ -2,9 +2,10 @@ body {
     padding: 0px;
     margin: 0px;
     display: block;
-    
 }
-  
+
+
+
 /* canvas {
     border: 1px solid #ccc;
     margin: 0 auto;
@@ -27,35 +28,8 @@ body {
   display: none;
 }
 
-.egg {
-  position: absolute;
-}
-
-.egg11 {
-  top: 95px;
-  left: 46px;
-}
-.egg12 {
-  top: 118px;
-  left: 71px;
-}
-.egg13 {
-  top: 138px;
-  left: 95px;
-}
-.egg14 {
-  top: 163px;
-  left: 121px;
-}
-
-.egg15 {
-  top: 204px;
-  left: 183px;
-}
-
-.cracked-egg-left {
-  top: 437px;
-  left: 144px;
+.show {
+  display: block !important;
 }
 
 .wolf1 {

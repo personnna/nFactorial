@@ -1,5 +1,5 @@
 debug = true
-
+const DIFFICTULTY = 250
 
 const trail1 = ['','','','','','']
 const trail2 = ['','','','','','']
@@ -13,8 +13,7 @@ const addEggFor = (n) => {
         return
     }
     trails[n][0] = 'egg'
-    console.log("added egg to trail" + n);
-    
+    console.log("added egg to trail " + n);
 }
 
 const isTrailEmpty = (n) => {
@@ -52,17 +51,27 @@ const rollEggFor = (n) => {
             break
         }
     }
+
+    
+    
+    try {
+        renderOnPage(i_egg, n)
+    } catch (error) {
+        console.log(error);
+    }
+
     // if index of egg is 6 then it cracks
     if (i_egg+1 == 6) {
         // TODO: return cracked egg
+        
         trails[n][i_egg] = ''
-        alert("cracked egg")
+        // alert("cracked egg")
         if (debug) {
             console.log("cracked egg on trail" + n );
         }
-
         return true
     }
+
     // rolls the egg
     trails[n][i_egg] = ''
     trails[n][i_egg+1] = 'egg'
@@ -70,18 +79,28 @@ const rollEggFor = (n) => {
         console.log("rolled egg on trail " + n + " from " + i_egg + " to " + (i_egg+1));
     }
     
-    // document.querySelector()
+
     
 
     // increment counter
     return false    
 }
 
+const renderOnPage = (i_egg, n) => {
+    if (debug) {
+        console.log("rendering trail "+n+ " from "+ (i_egg+1) + " to "+ (i_egg+1+1));
+    }
+    document.querySelector('.egg'+n+(i_egg+1)).classList.remove("hidden")
+    setTimeout(() => {
+        document.querySelector('.egg'+n+(i_egg+1)).classList.add("hidden")
+    }, DIFFICTULTY);
+}
+
 const rollAllTrails = () => {
     for (let i = 1; i <= 4; i++) {
         setInterval(
             () => rollEggFor(i),
-            1000
+            DIFFICTULTY
         )
     }
     
@@ -96,15 +115,16 @@ const collectEggFrom = (n) => {
         cnt++
         console.log("caught an egg on trail " + n, trails[n]);
         console.log("your counter is "+cnt);
-        
     }
 }
 let intervalId = 0
-const addEventListenersFor = (key) => {
+const setControllerFor = (key) => {
     document.addEventListener('keydown', (e)=>{
         if (e.key == key) {
             collectEggFrom(key-0)
-            console.log(intervalId);
+            if (debug) {
+                console.log("Interal Id is "+intervalId+" for key "+key);
+            }
             if (intervalId == 0) {
                 intervalId = setInterval(() => collectEggFrom(key-0), 1000)
             }
@@ -112,7 +132,6 @@ const addEventListenersFor = (key) => {
     })
     document.addEventListener('keyup', (e)=>{
         if (e.key == key) {
-            
             clearInterval(intervalId)
             intervalId = 0
         }
@@ -126,7 +145,7 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
 
-const setController = (key, class_name) => {
+const setButtonFor = (key, class_name) => {
     document.addEventListener('keydown', (e)=>{
         if (e.key == key) {
             document.querySelector('.'+class_name).classList.remove("hidden")
@@ -138,7 +157,7 @@ const setController = (key, class_name) => {
         }
     })
     if (debug) {
-        console.log("Event listeners added to "+ key);
+        console.log("Controller added to "+ key +" for " +class_name);
     }
 }
 
@@ -147,16 +166,15 @@ const startGame = () => {
     // makes the eggs move on trails if any
     rollAllTrails()
 
-    setController('1', 'wolf1')
-    setController('2', 'wolf2')
-    setController('3', 'wolf3')
-    setController('4', 'wolf4')
-    addEventListenersFor('1')
-    addEventListenersFor('2')
-    addEventListenersFor('3')
-    addEventListenersFor('4')    
-    
-    // setInterval(() => addEggFor(getRandomInt(4)+1), 3000)
+    setButtonFor('1', 'wolf1')
+    setButtonFor('2', 'wolf2')
+    setButtonFor('3', 'wolf3')
+    setButtonFor('4', 'wolf4')
+    setControllerFor('1')
+    setControllerFor('2')
+    setControllerFor('3')
+    setControllerFor('4')    
+    setInterval(() => addEggFor(getRandomInt(4)+1), 500)
 }
 
 startGame()

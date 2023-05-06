@@ -1,80 +1,140 @@
-debug = true
+debug = false
+
 
 const trail1 = ['','','','','','']
 const trail2 = ['','','','','','']
 const trail3 = ['','','','','','']
 const trail4 = ['','','','','','']
+const trails = {1: trail1, 2: trail2, 3: trail3, 4: trail4}
+let cnt = 0
 
-cnt = 0
-
-const addEgg = (trail, n) => {
-    trail[0] = 'egg'
-    if (debug) {
-        console.log("added egg to trail" + n);
+const addEggFor = (n) => {
+    if (!isTrailEmpty(n)) {
+        return
     }
+    trails[n][0] = 'egg'
+    console.log("added egg to trail" + n);
+    
 }
 
-const rollEgg = (trail, n) => {
-    // returns if trail is empty 
-    if (trail[0] == '') {
+const isTrailEmpty = (n) => {
+        // returns if trail is empty 
+        for (let i = 0; i < trails[n].length; i++) {
+            if (trails[n][i] == 'egg') {
+                if (debug) {
+                    console.log("found egg on trail "+ n + " on index " + i);
+                }
+                return false
+            }
+        }
+        return true
+}
+
+// n: String
+// moves egg to the next index
+// if trail is empty does nothing
+// returns true if cracked egg
+const rollEggFor = (n) => {
+    // if (debug) {
+    //     console.log("trying to roll egg on "+n);
+    // }
+
+    if (isTrailEmpty(n)) {
         return false
     }
     
+    
     // finds the index of the egg
     let i_egg = 0
-    for (let i = 0; i < trail.length; i++) {
-        if (trail[i] == 'egg') {
+    for (let i = 0; i < trails[n].length; i++) {
+        if (trails[n][i] == 'egg') {
             i_egg = i
             break
         }
     }
-
-    // rolls the egg
-    trail[i_egg] = ''
-    trail[i_egg+1] = 'egg'
-    if (debug) {
-        console.log("rolled egg on trail " + n + " from " + i_egg + " to " + i_egg+1);
-    }
-    
     // if index of egg is 6 then it cracks
     if (i_egg+1 == 6) {
         // TODO: return cracked egg
+        trails[n][i_egg] = ''
         alert("cracked egg")
         if (debug) {
             console.log("cracked egg on trail" + n );
         }
-    
+
         return true
     }
+    // rolls the egg
+    trails[n][i_egg] = ''
+    trails[n][i_egg+1] = 'egg'
+    if (debug) {
+        console.log("rolled egg on trail " + n + " from " + i_egg + " to " + (i_egg+1));
+    }
+    
+    
 
     // increment counter
     return false    
 }
 
-const rollAllTrails = (trail1, trail2, trail3, trail4) => {
-    setInterval(
-        () => rollEgg(trail1),
-        1000
-    )
-    setInterval(
-        () => rollEgg(trail2),
-        1000
-    )
-    setInterval(
-        () => rollEgg(trail3),
-        1000
-    )
-    setInterval(
-        () => rollEgg(trail4),
-        1000
-    )
+const rollAllTrails = () => {
+    for (let i = 1; i <= 4; i++) {
+        setInterval(
+            () => rollEggFor(i),
+            1000
+        )
+    }
     
 }
 
-
-const startGame = () => {
-    rollAllTrails(trail1, trail2, trail3, trail4)
-    setTimeout(() => addEgg(trail1, 1), 3000)
+const collectEggFrom = (n) => {
+    if (debug) {
+        console.log("trying to collect egg on trail " + n, trails[n]);
+    }
+    if (trails[n][4] == 'egg') {
+        trails[n][4] = ''
+        cnt++
+        console.log("caught an egg on trail " + n, trails[n]);
+        console.log("your counter is "+cnt);
+        
+    }
+}
+let intervalId = 0
+const addEventListenersFor = (key) => {
+    document.addEventListener('keydown', (e)=>{
+        if (e.key == key) {
+            collectEggFrom(key-0)
+            console.log(intervalId);
+            if (intervalId == 0) {
+                intervalId = setInterval(() => collectEggFrom(key-0), 1000)
+            }
+        }
+    })
+    document.addEventListener('keyup', (e)=>{
+        if (e.key == key) {
+            
+            clearInterval(intervalId)
+            intervalId = 0
+        }
+    })
+    if (debug) {
+        console.log("Event listeners added to "+ key);
+    }
 }
 
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+  }
+  
+
+const startGame = () => {
+    // makes the eggs move on trails if any
+    rollAllTrails()
+    
+    
+    setInterval(() => addEggFor(getRandomInt(4)+1), 3000)
+}
+addEventListenersFor('1')
+addEventListenersFor('2')
+addEventListenersFor('3')
+addEventListenersFor('4')
 startGame()

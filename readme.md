@@ -6,6 +6,7 @@
 
 <img src="./progress report/Screen Shot 2023-05-06 at 22.33.44.png">
 
+<a href="https://armansu.notion.site/9869cc9be60e452480597e231982ff23">Ссылка на задание</a>
 
 ## Как запустить?
 

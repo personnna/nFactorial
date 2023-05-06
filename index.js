@@ -1,4 +1,4 @@
-debug = false
+debug = true
 
 
 const trail1 = ['','','','','','']
@@ -70,6 +70,7 @@ const rollEggFor = (n) => {
         console.log("rolled egg on trail " + n + " from " + i_egg + " to " + (i_egg+1));
     }
     
+    // document.querySelector()
     
 
     // increment counter
@@ -123,18 +124,39 @@ const addEventListenersFor = (key) => {
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
-  }
-  
+}
+
+const setController = (key, class_name) => {
+    document.addEventListener('keydown', (e)=>{
+        if (e.key == key) {
+            document.querySelector('.'+class_name).classList.remove("hidden")
+        }
+    })
+    document.addEventListener('keyup', (e)=>{
+        if (e.key == key) {
+            document.querySelector('.'+class_name).classList.add("hidden")
+        }
+    })
+    if (debug) {
+        console.log("Event listeners added to "+ key);
+    }
+}
+
 
 const startGame = () => {
     // makes the eggs move on trails if any
     rollAllTrails()
+
+    setController('1', 'wolf1')
+    setController('2', 'wolf2')
+    setController('3', 'wolf3')
+    setController('4', 'wolf4')
+    addEventListenersFor('1')
+    addEventListenersFor('2')
+    addEventListenersFor('3')
+    addEventListenersFor('4')    
     
-    
-    setInterval(() => addEggFor(getRandomInt(4)+1), 3000)
+    // setInterval(() => addEggFor(getRandomInt(4)+1), 3000)
 }
-addEventListenersFor('1')
-addEventListenersFor('2')
-addEventListenersFor('3')
-addEventListenersFor('4')
+
 startGame()

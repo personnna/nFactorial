@@ -3,41 +3,18 @@
   <head>
     <title>Моя игра</title>
     <script src="index.js" defer></script>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
-
-    <!-- <style>
-      body {
-        background-image: url("img/background.jpeg");
-        background-size: cover;
-        background-position: bottom;
-        background-attachment: fixed;
-        width: 100%;
-        height: 100%;
-      }
-    </style>
-    <div class="wolf">
     
-    <div style="position: relative;">
-        <img src="img/wolf.png" alt="Wolf" 
-        style="position: absolute; top: 500px; left: 50px; width: 200px; height: 200px;">
-    </div>
-
-    <script>
-        var wolf = document.getElementById('Wolf');
-        document.addEventListener('mousemove', function(event) {
-            var mouseX = event.clientX;
-            var mouseY = event.clientY;
-            wolf.style.left = mouseX + 'px';
-            wolf.style.top = mouseY + 'px';
-        });
-    </script> -->
-      
-
+    
   
     <div class="game-container">
-      <div class="cloud"></div>
-      <div class="tree"></div>
+      <img class="game__bg" src="assets/Static.png" alt="">
+      <img class="game__wolf wolf1 hidden" src="./assets/Wolf1.png">
+      <img class="game__wolf wolf2 hidden" src="./assets/Wolf2.png">
+      <img class="game__wolf wolf3 hidden" src="./assets/Wolf3.png">
+      <img class="game__wolf wolf4 hidden" src="./assets/Wolf4.png">
     </div>
   </body>
 </html>

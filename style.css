@@ -1,25 +1,53 @@
 body {
-    background-image: "";
+    padding: 0px;
+    margin: 0px;
+    display: block;
+    
 }
   
-canvas {
+/* canvas {
     border: 1px solid #ccc;
     margin: 0 auto;
     display: block;
-  }
+} */
   
-.game-container {
-  position: relative;
+.game__bg {
+  /* background-image: url(/assets/Static.png);
+  background-position: center;
+  background-size: contain; */
+  z-index: -100;
+  position: absolute;
+  
   width: 800px;
   height: 600px;
   background-color: #ddd;
 }
 
-.wolf {
+.hidden {
+  display: none;
+}
+
+.wolf1 {
+left: 150px;
+}
+.wolf2 {
+  left: 300px;
+}
+.wolf3 {
+  left: 100px;
+}
+.wolf4 {
+  left: 300px;
+}
+
+.game__wolf {
+  /* background-image: url(/assets/Wolf1.png); */
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100px;
-  height: auto;
+  top: 130px;
+  /* left: 50%; */
+  
+  
+  /* width: fit-content; */
+  /* height: 100%; */
+  
 }
